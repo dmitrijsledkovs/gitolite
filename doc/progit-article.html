@@ -58,7 +58,7 @@ $ ./gl-easy-install -q gitolite gitserver sitaram
 
 <h3>Customising the Install</h3>
 
-<p>While the default, quick, install works for most people, there are some ways to customise the install if you need to.  If you omit the <code>-q</code> argument, you get a "verbose" mode install -- detailed information on what the install is doing at each step.  The verbose mode also allows you to change certain server-side parameters, such as the location of the actual repositories, by editing an "rc" file that the server uses.  This "rc" file is liberally commented so you should be able to make any changes you need quite easily, save it, and continue.  This file also contains various settings that you can change to enable or disable some of gitolite's advanced features.</p>
+<p>While the default, quick, install works for most people, there are some ways to customise the install if you need to.  If you omit the <code>-q</code> argument, you get a "verbose" mode install -- detailed information on what the install is doing at each step.  The verbose mode also allows you to change certain server-side parameters, such as the location of the actual repositories, by editing an "rc" file that the server uses.  This "rc" file is documented in <a href="http://sitaramc.github.com/gitolite/doc/gitolite.rc.html">doc/gitolite.rc.mkd</a> so you should be able to make any changes you need quite easily, save it, and continue.  This file also contains various settings that you can change to enable or disable some of gitolite's advanced features.</p>
 
 <p><a name="_Config_File_and_Access_Control_Rules_"></a></p>
 
@@ -74,7 +74,8 @@ conf/gitolite.conf
 keydir/sitaram.pub
 $ cat conf/gitolite.conf
 #gitolite conf
-# please see conf/example.conf for details on syntax and features
+# please see doc/gitolite.conf.mkd for details on syntax and features
+
 
 repo gitolite-admin
     RW+                 = sitaram
@@ -85,7 +86,7 @@ repo testing
 
 <p>Notice that "sitaram" (the last argument in the <code>gl-easy-install</code> command you gave earlier) has read-write permissions on the <code>gitolite-admin</code> repository as well as a public key file of the same name.</p>
 
-<p>The config file syntax for gitolite is liberally documented in <code>conf/example.conf</code>, so we'll only mention some highlights here.</p>
+<p>The config file syntax for gitolite is documented in <a href="http://sitaramc.github.com/gitolite/doc/gitolite.conf.html">doc/gitolite.conf.mkd</a> so we'll only mention some highlights here.</p>
 
 <p>You can group users or repos for convenience.  The group names are just like macros; when defining them, it doesn't even matter whether they are projects or users; that distinction is only made when you <em>use</em> the "macro".</p>
 

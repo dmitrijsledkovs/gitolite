@@ -67,8 +67,8 @@ creating the repo.  The examples below will make this clearer.</p>
 <h3>rc file setting required</h3>
 
 <p>This feature requires that you set <code>$GL_WILDREPOS</code> to "1" in <code>~/.gitolite.rc</code>
-on the server.  Please search for that variable and see comments around it in
-<code>conf/example.gitolite.rc</code> for more information on this.</p>
+on the server.  Please search for that variable in <code>doc/gitolite.rc.mkd</code>
+for more information on this.</p>
 
 <p><a name="_examples_of_wildcard_repos"></a></p>
 
@@ -180,7 +180,7 @@ metacharacters.</p>
 <h4>contrast with refexes</h4>
 
 <p>Just for interest, note that this is in contrast to the refexes for the normal
-"branch" permissions, as described in <code>conf/example.conf</code> and elsewhere.
+"branch" permissions, as described in <code>doc/gitolite.conf.mkd</code> and elsewhere.
 These "refexes" are only anchored at the start; a pattern like
 <code>refs/heads/master</code> actually can match <code>refs/heads/master01/bar</code> as well, even
 if no one will actually push such a branch!  You can anchor both sides if you
@@ -264,9 +264,8 @@ INTERNS ashok
 TESTERS ashok
 </code></pre>
 
-<p>You can enable do this by setting the <code>GL_WILDREPOS_PERM_CATS</code> variable in the
-rc file.  The example rc file (<code>conf/example.gitolite.rc</code>) explains how to do
-this, with sample code.</p>
+<p>You can enable this by setting the <code>GL_WILDREPOS_PERM_CATS</code> variable in the rc
+file.  The rc file documentation (<code>doc/gitolite.rc.mkd</code>) explains how.</p>
 
 <p><a name="_IMPORTANT_WARNING_ABOUT_THIS_FEATURE_"></a></p>
 

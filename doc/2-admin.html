@@ -73,7 +73,7 @@ periods and underscores</p></li>
 clone.  You can also organise them into various subdirectories of <code>keydir</code>
 if you wish, since the entire tree is searched.</p></li>
 <li><p>edit the config file (<code>conf/gitolite.conf</code> in your admin repo clone).  See
-<code>conf/example.conf</code> in the gitolite source for details on what goes in
+<code>doc/gitolite.conf.mkd</code> in the gitolite source for details on what goes in
 that file, syntax, etc.  Just add new repos as needed, and add new users
 and give them permissions as required.  The users names should be exactly
 the same as their keyfile names, but without the <code>.pub</code> extension</p></li>
@@ -371,7 +371,7 @@ very easily.  For security reasons, this can only be done from the master
 config file (i.e., if you're using delegation, the delegated admins cannot
 specify git config settings).</p>
 
-<p>Please see <code>conf/example.conf</code> for syntax.  Note that this only supports the
+<p>Please see <code>doc/gitolite.conf.mkd</code> for syntax.  Note that this only supports the
 basic forms of the "git config" command:</p>
 
 <pre><code>git config              section.key value   # value may be an empty string
