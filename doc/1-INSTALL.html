@@ -273,10 +273,11 @@ is the first argument of <code>gl-system-install</code> above.</p></li>
 
 <h4>(non-root method) directly on the server, manually, without root access</h4>
 
-<p>WARNING: if you use this method you'd better know enough about ssh to be able
-to keep your keys straight, and you'd also better have password access to the
-server so that if you screw up the keys you can still get on, or be able to
-"su - git" from some other user on the server.</p>
+<p><strong>WARNING: if you want to use this method your shell access to the git account
+on the server should be via <code>su - git</code> from some other userid.  If that is not
+possible, you should (a) know the password in case you screw up the keys AND
+(b) know how to force ssh to ask for a password if required, AND (c) know how
+to handle multiple keys in ssh.</strong></p>
 
 <ul>
 <li><p>from your workstation, copy your <code>~/.ssh/id_rsa.pub</code> file to the server.

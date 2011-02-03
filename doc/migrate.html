@@ -40,6 +40,9 @@ post-update</code>.</p>
 
 <p>If you do not do this, an accidental push to the gitosis-admin repo will
 mess up your <code>~/.ssh/authorized_keys</code> file</p></li>
+<li><p>If you already use the <code>update</code> hook for some reason, <strong>rename</strong> it (on
+each individual repository) to <code>update.secondary</code>.  This is because
+gitolite uses the update hook for checking write access.</p></li>
 <li><p>take a <strong>backup</strong> of the <code>~/repositories</code> directory</p></li>
 </ol>
 
