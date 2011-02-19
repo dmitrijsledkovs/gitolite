@@ -27,6 +27,7 @@ in the (now reorganised) example "rc" file.</p>
 <li><a href="#_variables_with_a_security_impact">variables with a security impact</a></li>
 <li><a href="#_less_used_changed_variables">less used/changed variables</a></li>
 <li><a href="#_rarely_changed_variables">rarely changed variables</a></li>
+<li><a href="#_constants_that_aren_t_">constants that aren't!</a></li>
 </ul>
 
 <p>[Note: in perl, there is no actual boolean.  The undefined value, the number
@@ -339,6 +340,25 @@ of the listing.</p></li>
 <li><p><code>$REPO_BASE</code>, string, default "repositories"</p>
 
 <p>This is where all the repos go.  If it's not an absolute path, it is
-considered to be relative to $HOME.  Changing it after the install has
-completed is doable, but tricky if you don't know how gitolite works.</p></li>
+considered to be relative to $HOME.  Moving all the repositories after the
+install has completed is doable: just <a href="http://sitaramc.github.com/gitolite/doc/3-faq-tips-etc.html#_disabling_write_access_to_take_backups">disable writes</a> to gitolite,
+move <code>~/repositories/*</code>, change this variable, then re-enable writes.</p></li>
 </ul>
+
+<p><a name="_constants_that_aren_t_"></a></p>
+
+<h3>constants that aren't!</h3>
+
+<p>The source file <code>src/gitolite_rc.pm</code> defines a few "constants", for example:</p>
+
+<pre><code>$R_COMMANDS=qr/^(git[ -]upload-pack|git[ -]upload-archive)$/;
+</code></pre>
+
+<p>Let's say you want to disallow the archive feature, you would need to change
+this constant.</p>
+
+<p>As of this version, you can now change these "constants" also, simply by
+defining a new value for any or all of them in your <code>~/.gitolite.rc</code> file.</p>
+
+<p>If you use this to relax some of the patterns involved (for example, the value
+of <code>ADC_CMD_ARGS_PATT</code>), please be sure you know what you're doing.</p>
