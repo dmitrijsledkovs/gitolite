@@ -81,11 +81,15 @@ typed in when he ran <code>request-pull</code>:</p>
 <li><p>Alice views the log of the branch she is being asked to pull.  Note that
 this does NOT involve a fetch, so it will be pretty fast.  The log starts
 from b1, and stops at a SHA that represents any of the branches in foo.
-(Alice can use any git-log options she wants to; for instance <code>--graph</code>,
+Alice can use any git-log options she wants to; for instance <code>--graph</code>,
 <code>--boundary</code>, <code>--decorate</code>, etc., could be quite useful.  However, she
 can't use any GUI; it has to be 'git log':</p>
 
-<pre><code>view-request-log &lt;git log options&gt; foo 1 [SHA]
+<pre><code>view-log &lt;git log options&gt; foo 1 [SHA]
+</code></pre></li>
+<li><p>Alice views the diff between arbitrary commits on bar:</p>
+
+<pre><code>view-diff &lt;git diff options&gt; foo 1 SHA1 SHA2
 </code></pre></li>
 <li><p>Alice doesn't like what she sees and decides to reject it.  This command
 expects some text on STDIN as the rejection message:</p>
@@ -103,20 +107,22 @@ not involve network traffic:</p>
 asking her to pull.  Note that we are intentionally not using the word
 "accept", because this command does not (and cannot, since it is running
 on a bare repo on the server) do a pull.  What it does is it fetches into
-a branch whose name will be <code>requests/bar/b1</code>.  Note that when multiple
-requests from the same repo (bar) for the same branch (b1) happen, each
-"fetch" overwrites the branch.  This allows Bob to continually refine the
-branch he is requesting for a pull based on (presumably emailed) comments
-from Alice.  In a way, this is a "remote tracking branch", just like
-<code>refs/remotes/origin/b1</code>.</p>
+a branch whose name will be <code>requests/bar/b1</code>.</p>
+
+<p>Note that when multiple requests from the same repo (bar) for the same
+branch (b1) happen, each "fetch" overwrites the branch.  This allows Bob
+to continually refine the branch he is requesting for a pull based on
+(presumably emailed) comments from Alice.  In a way, this is a "remote
+tracking branch", just like <code>refs/remotes/origin/b1</code>.</p>
 
 <pre><code>fetch foo 1
-</code></pre>
-
-<p>Since all this is still only on the bare <code>foo.git</code> on the server, Alice
-will still have to run a fetch or a pull on her workstation, to check the
-code in detail or use a tool like gitk, or even compile/test it.  <em>Then</em>
-she decided whether to accept or reject the request, which will have to be
-communicated via email, of course.  See the second para of this document
-;-)</p></li>
+</code></pre></li>
 </ul>
+
+<p>At this point, you're done with the <code>hub</code> ADC.  However, all this is on the
+bare <code>foo.git</code> on the server, and nothing has hit Alice's workstation yet!
+Alice will still have to run a fetch or a pull on her workstation if she wants
+to check the code in detail, use a tool like gitk, and expecially to
+compile/test it.  <em>Then</em> she decides whether to accept or reject the request,
+which will have to be communicated via email, of course; see the second para
+of this document ;-)</p>
