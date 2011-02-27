@@ -20,8 +20,8 @@ this system is not a replacement for normal project communications like
 email!]</p>
 
 <p>In the following description, we will assume that <strong>Alice</strong> has a repo
-<strong>foo</strong>, <strong>Bob</strong> has a fork of foo called <strong>bar</strong>, and he is asking Alice to
-pull a branch he made called <strong>b1</strong> from bar to foo.</p>
+<strong>parent</strong>, <strong>Bob</strong> has a fork of parent called <strong>child</strong>, and he is asking Alice to
+pull a branch he made called <strong>b1</strong> from child to parent.</p>
 
 <p>In plain git (without github etc), the pull request process starts with an
 email from Bob to Alice, followed by Alice running a <code>git fetch</code> (possibly
@@ -34,8 +34,8 @@ the changes with any combination of <code>git log</code> options without having 
 the content first.</p>
 
 <p>On the flip side, a thorough examination of the changes required (including
-possibly testing) now incurs <em>two</em> fetches -- one from the server side bar.git
-to the server side foo.git, then one from there to the foo clone on Alice's
+possibly testing) now incurs <em>two</em> fetches -- one from the server side child.git
+to the server side parent.git, then one from there to the parent clone on Alice's
 workstation.</p>
 
 <p>[Confused?  In plain git, we don't assume Bob's "server" and Alice's "server"
@@ -53,52 +53,58 @@ server to Alice's server to Alice's workstation!]</p>
 <p>The following commands do not cause a fetch, and should be quite fast:</p>
 
 <ul>
-<li><p>Bob sends a pull request for branch b1 to repo foo.  Notice he does not
+<li><p>Bob sends a pull request for branch b1 to repo parent.  Notice he does not
 mention Alice by name.  This command expects a message to be typed in via
 STDIN:</p>
 
-<pre><code>request-pull bar b1 foo
+<pre><code>request-pull child b1 parent
 </code></pre></li>
 <li><p>Bob lists the status (fetched/rejected/pending) of pull requests he has
-made from his repo bar.  (Note we don't say "accepted" but "fetched"; see
-later for why):</p>
+made from his repo child to repo parent.  (Note we don't say "accepted" but
+"fetched"; see later for why):</p>
 
-<pre><code>list-status bar
+<pre><code>request-status child parent
 </code></pre></li>
-<li><p>Alice lists requests waiting for her to check and possibly pull into foo.
+<li><p>Alice lists requests waiting for her to check and possibly pull into
+parent.
 For each waiting pull request, she will see a serial number, the
-originating repo name (bar, in our example), the owner, if applicable
+originating repo name (child, in our example), the owner, if applicable
 (Bob, here), and the branch/tag-name (b1) being pulled:</p>
 
-<pre><code>list-requests foo
+<pre><code>list-requests parent
 </code></pre></li>
-<li><p>Alice views request # 1 waiting to be pulled into foo.  Shows the same
+<li><p>Alice views request # 1 waiting to be pulled into parent.  Shows the same
 details as above for that request, then displays the message that Bob
 typed in when he ran <code>request-pull</code>:</p>
 
-<pre><code>view-request foo 1
+<pre><code>view-request parent 1
 </code></pre></li>
 <li><p>Alice views the log of the branch she is being asked to pull.  Note that
 this does NOT involve a fetch, so it will be pretty fast.  The log starts
-from b1, and stops at a SHA that represents any of the branches in foo.
+from b1, and stops at a SHA that represents any of the branches in parent.
 Alice can use any git-log options she wants to; for instance <code>--graph</code>,
-<code>--boundary</code>, <code>--decorate</code>, etc., could be quite useful.  However, she
+<code>--decorate</code>, <code>--boundary</code>, etc., could be quite useful.  However, she
 can't use any GUI; it has to be 'git log':</p>
 
-<pre><code>view-log &lt;git log options&gt; foo 1 [SHA]
-</code></pre></li>
-<li><p>Alice views the diff between arbitrary commits on bar:</p>
+<pre><code>view-log parent 1 &lt;git log options&gt;
+</code></pre>
 
-<pre><code>view-diff &lt;git diff options&gt; foo 1 SHA1 SHA2
+<p>Notice that the repo name Alice supplies is still her own, although the
+log comes from the child repo that Bob wants Alice to pull from.  It's
+best if you think of this as "view the log of the commit chain that
+represents pull request #1 in 'parent'".</p></li>
+<li><p>Alice views the diff between arbitrary commits on child:</p>
+
+<pre><code>view-diff parent 1 &lt;git diff options&gt;
 </code></pre></li>
 <li><p>Alice doesn't like what she sees and decides to reject it.  This command
 expects some text on STDIN as the rejection message:</p>
 
-<pre><code>reject foo 1
+<pre><code>reject parent 1
 </code></pre></li>
 </ul>
 
-<p>The following commands will actually fetch from bar into foo, and may take
+<p>The following commands will actually fetch from child into parent, and may take
 time if the changes are large.  However all this is on the server so it does
 not involve network traffic:</p>
 
@@ -107,20 +113,20 @@ not involve network traffic:</p>
 asking her to pull.  Note that we are intentionally not using the word
 "accept", because this command does not (and cannot, since it is running
 on a bare repo on the server) do a pull.  What it does is it fetches into
-a branch whose name will be <code>requests/bar/b1</code>.</p>
+a branch whose name will be <code>requests/child/b1</code>.</p>
 
-<p>Note that when multiple requests from the same repo (bar) for the same
+<p>Note that when multiple requests from the same repo (child) for the same
 branch (b1) happen, each "fetch" overwrites the branch.  This allows Bob
 to continually refine the branch he is requesting for a pull based on
 (presumably emailed) comments from Alice.  In a way, this is a "remote
 tracking branch", just like <code>refs/remotes/origin/b1</code>.</p>
 
-<pre><code>fetch foo 1
+<pre><code>fetch parent 1
 </code></pre></li>
 </ul>
 
 <p>At this point, you're done with the <code>hub</code> ADC.  However, all this is on the
-bare <code>foo.git</code> on the server, and nothing has hit Alice's workstation yet!
+bare <code>parent.git</code> on the server, and nothing has hit Alice's workstation yet!
 Alice will still have to run a fetch or a pull on her workstation if she wants
 to check the code in detail, use a tool like gitk, and expecially to
 compile/test it.  <em>Then</em> she decides whether to accept or reject the request,
