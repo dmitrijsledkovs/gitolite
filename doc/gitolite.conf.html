@@ -420,8 +420,8 @@ The idea came to me while working on <a href="http://sitaramc.github.com/gitolit
 so you can thank them for the inspiration.</p>
 
 <p><em>For all that, it's still a hack.  And it only works with ssh access -- don't
-expect it to ever work git-daemon or gitweb access, and even getting it to
-play nice with smart http may never happen.</em></p>
+expect it to ever work with git-daemon or gitweb access, and even getting it
+to play nice with smart http may never happen.</em></p>
 
 <p>Here's how you can use this, if you're really desperate.  Let's say you have
 the following rules for repo <code>foo</code>:</p>
@@ -435,15 +435,14 @@ the following rules for repo <code>foo</code>:</p>
 </code></pre>
 
 <p>Gitolite before this version would give all four users the same read access to
-the repository.  After all, they have each been named in some "R" or "RW"
-line somewhere in that repo.</p>
+the repository.  After all, they have each been named in some "R" or "RW" line
+somewhere in that repo.  This in turn means that line 3 should actually be
+just <code>R = u3</code>, because the <code>b1</code> has no effect</p>
 
-<p>In other words, line 3 should actually be just <code>R = u3</code>, because the <code>b1</code> has
-no real effect!  In fact, line 3 may even be the result of a misunderstanding
-(such as <a href="http://colabti.org/irclogger/irclogger_log/git?date=2011-02-23#l2261">this one</a>).</p>
+<p>In fact, line 3 may even be the result of a misunderstanding (such as <a href="http://colabti.org/irclogger/irclogger_log/git?date=2011-02-23#l2261">this
+one</a>).  So we now let that misunderstood syntax get some DWIM magic.</p>
 
-<p>So we now let that misunderstood syntax get some DWIM magic.  Here's the rule,
-starting from this revision:</p>
+<p>Here's the rule, starting from this revision:</p>
 
 <blockquote>
   <p><strong>When a user has an <code>R</code> combined with an explicit refex in a set of
@@ -475,7 +474,7 @@ found in doc/wildcard-repositories.mkd.]</p>
 
 <h3>virtual "ref"-types</h3>
 
-<p>This is a highly advanced topic; see <a href="http://github.com/sitaramc/gitolite/blob/pu/doc/virtualrefs-and-scoring.mkd">doc/virtualrefs-and-scoring.mkd</a> for
+<p>This is a highly advanced topic; see <a href="http://sitaramc.github.com/gitolite/doc/virtualrefs-and-scoring.html">doc/virtualrefs-and-scoring.mkd</a> for
 details.</p>
 
 <p><a name="_other_tips"></a></p>
